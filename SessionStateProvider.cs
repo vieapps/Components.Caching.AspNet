@@ -21,7 +21,7 @@ namespace net.vieapps.Components.Caching.AspNet
 				SessionStateProvider.Prefixs = new Tuple<string, string>("Header@" + name + "#", "Data@" + name + "#");
 		}
 
-		public override void InitializeRequest(HttpContext context) {}
+		public override void InitializeRequest(HttpContext context) { }
 
 		public override void EndRequest(HttpContext context) { }
 
@@ -147,7 +147,7 @@ namespace net.vieapps.Components.Caching.AspNet
 		public override void SetAndReleaseItemExclusive(HttpContext context, string id, SessionStateStoreData item, object lockId, bool newItem)
 		{
 			SessionStateItem data = null;
-			bool existing = false;
+			var existing = false;
 
 			if (!newItem)
 			{
@@ -205,9 +205,11 @@ namespace net.vieapps.Components.Caching.AspNet
 				{
 					this.SaveHeader(stream);
 					var timespan = TimeSpan.FromMinutes(this.Timeout);
+					var key = SessionStateProvider.Prefixs.Item1 + id;
+					var value = new ArraySegment<byte>(stream.GetBuffer(), 0, (int)stream.Length);
 					bool result = useCas
-						? Memcached.Client.Cas(StoreMode.Set, SessionStateProvider.Prefixs.Item1 + id, new ArraySegment<byte>(stream.GetBuffer(), 0, (int)stream.Length), timespan, this.HeadCas).Result
-						: Memcached.Client.Store(StoreMode.Set, SessionStateProvider.Prefixs.Item1 + id, new ArraySegment<byte>(stream.GetBuffer(), 0, (int)stream.Length), timespan);
+						? Cache.Memcached.Cas(StoreMode.Set, key, value, timespan, this.HeadCas).Result
+						: Cache.Memcached.Store(StoreMode.Set, key, value, timespan);
 
 					if (!metaOnly)
 					{
@@ -215,9 +217,12 @@ namespace net.vieapps.Components.Caching.AspNet
 						using (var writer = new BinaryWriter(stream))
 						{
 							this.Data.Serialize(writer);
+							key = SessionStateProvider.Prefixs.Item2 + id;
+							value = new ArraySegment<byte>(stream.GetBuffer(), 0, (int)stream.Length);
+
 							result = useCas
-								? Memcached.Client.Cas(StoreMode.Set, SessionStateProvider.Prefixs.Item2 + id, new ArraySegment<byte>(stream.GetBuffer(), 0, (int)stream.Length), timespan, this.DataCas).Result
-								: Memcached.Client.Store(StoreMode.Set, SessionStateProvider.Prefixs.Item2 + id, new ArraySegment<byte>(stream.GetBuffer(), 0, (int)stream.Length), timespan);
+								? Cache.Memcached.Cas(StoreMode.Set, key, value, timespan, this.DataCas).Result
+								: Cache.Memcached.Store(StoreMode.Set, key, value, timespan);
 						}
 					}
 
@@ -247,7 +252,7 @@ namespace net.vieapps.Components.Caching.AspNet
 
 			public static SessionStateItem Load(string id, bool metaOnly)
 			{
-				var header = Memcached.Client.GetWithCas<byte[]>(SessionStateProvider.Prefixs.Item1 + id);
+				var header = Cache.Memcached.GetWithCas<byte[]>(SessionStateProvider.Prefixs.Item1 + id);
 				if (header.Result == null)
 					return null;
 
@@ -263,7 +268,7 @@ namespace net.vieapps.Components.Caching.AspNet
 				if (metaOnly)
 					return entry;
 
-				var data = Memcached.Client.GetWithCas<byte[]>(SessionStateProvider.Prefixs.Item2 + id);
+				var data = Cache.Memcached.GetWithCas<byte[]>(SessionStateProvider.Prefixs.Item2 + id);
 				if (data.Result == null)
 					return null;
 
@@ -286,8 +291,8 @@ namespace net.vieapps.Components.Caching.AspNet
 
 			public static void Remove(string id)
 			{
-				Memcached.Client.Remove(SessionStateProvider.Prefixs.Item1 + id);
-				Memcached.Client.Remove(SessionStateProvider.Prefixs.Item2 + id);
+				Cache.Memcached.Remove(SessionStateProvider.Prefixs.Item1 + id);
+				Cache.Memcached.Remove(SessionStateProvider.Prefixs.Item2 + id);
 			}
 		}
 
