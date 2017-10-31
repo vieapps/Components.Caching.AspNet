@@ -1,6 +1,6 @@
 # Components.Caching.AspNet.Memcached
-A wrapper for working with ASP.NET Session State via memcached
-- Identities will use "key-prefix" as provider name in web.config
+The memcached client library for working with ASP.NET Session State
+- Identities will have the "prefix" as the name of the provider (in web.config file)
 - Using [VIEApps.Enyim.Caching](https://github.com/vieapps/Enyim.Caching) as memcached client library
 
 ## Nuget
