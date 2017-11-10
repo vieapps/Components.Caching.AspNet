@@ -2,11 +2,9 @@
 using System;
 using System.IO;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.SessionState;
 using System.Configuration;
 using System.Collections.Specialized;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 #endregion
 
@@ -68,7 +66,7 @@ namespace net.vieapps.Components.Caching.AspNet
 		{
 			var data = new RedisSessionStateItem(SessionStateActions.None, item.Timeout);
 			data.Serialize((SessionStateItemCollection)item.Items);
-			Redis.Client.Set(RedisSessionStateProvider.Prefix + id, data, TimeSpan.FromMinutes(item.Timeout));
+			Redis.Client.Set(RedisSessionStateProvider.Prefix + id, data, item.Timeout);
 		}
 
 		public override void ReleaseItemExclusive(HttpContext context, string id, object lockId)
@@ -95,7 +93,7 @@ namespace net.vieapps.Components.Caching.AspNet
 		{
 			var data = Redis.Client.Get<RedisSessionStateItem>(RedisSessionStateProvider.Prefix + id);
 			if (data != null)
-				Redis.Client.Set(RedisSessionStateProvider.Prefix + id, data, TimeSpan.FromMinutes(data.Timeout));
+				Redis.Client.Set(RedisSessionStateProvider.Prefix + id, data, data.Timeout);
 		}
 	}
 
@@ -145,7 +143,7 @@ namespace net.vieapps.Components.Caching.AspNet
 					{
 						items = SessionStateItemCollection.Deserialize(reader);
 					}
-				return new SessionStateStoreData(items, SessionStateUtility.GetSessionStaticObjects(context), this._timeout);
+				return new SessionStateStoreData(items, SessionStateUtility.GetSessionStaticObjects(context), this.Timeout);
 			}
 		}
 
