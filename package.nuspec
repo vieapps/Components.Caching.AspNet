@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
 	<metadata>
 		<id>VIEApps.Components.Caching.AspNet</id>
-		<version>10.1.3.1712</version>
+		<version>10.1.4.1712</version>
 		<authors>VIEApps.net</authors>
 		<copyright>© 2017 VIEApps.net</copyright>
 		<title>VIEApps NGX Caching for ASP.NET Session</title>
@@ -14,7 +14,7 @@
 		<repository type="git" url="https://github.com/vieapps/Components.Caching.AspNet" />
 		<dependencies>
 			<group targetFramework=".NETStandard2.0">
-				<dependency id="VIEApps.Components.Caching" version="10.1.3.1712" exclude="Build,Analyzers" />
+				<dependency id="VIEApps.Components.Caching" version="10.1.4.1712" exclude="Build,Analyzers" />
 			</group>
 		</dependencies>
 	</metadata>

@@ -1,11 +1,11 @@
 # VIEApps.Components.Caching.AspNet
-The library to help ASP.NET Session State works with distributed cache (memcached & redis)
+The library helps ASP.NET Session State works with distributed cache (Memcached & Redis)
 - Identities will have the "prefix" as the name of the provider (in web.config file)
 - Using [VIEApps.Components.Caching](https://github.com/vieapps/Components.Caching) as main library
-## Nuget
+## NuGet
 - Package ID: VIEApps.Components.Caching.AspNet
 - Details: https://www.nuget.org/packages/VIEApps.Components.Caching.AspNet/
-## Configuration for using memcached
+## Configuration for using Memcached
 ```xml
 <sessionState mode="Custom" cookieless="UseCookies" cookieName=".ASPNET-Session-ID" regenerateExpiredSessionId="true" customProvider="MemcachedSessionStateProvider">
 	<providers>
@@ -14,7 +14,7 @@ The library to help ASP.NET Session State works with distributed cache (memcache
 </sessionState>
 ```
 Remarks: the name of the session state provider (MemcachedSessionStateProvider) will be used as prefix of all keys
-## Configuration for using redis
+## Configuration for using Redis
 ```xml
 <sessionState mode="Custom" cookieless="UseCookies" cookieName=".ASPNET-Session-ID" regenerateExpiredSessionId="true" customProvider="RedisSessionStateProvider">
 	<providers>
