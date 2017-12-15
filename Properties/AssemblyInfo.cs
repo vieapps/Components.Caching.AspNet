@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("VIEApps NGX Caching")]
 [assembly: AssemblyCompany("VIEApps.net")]
 [assembly: AssemblyProduct("VIEApps NGX")]
-[assembly: AssemblyCopyright("© 2017 VIEApps.net")]
+[assembly: AssemblyCopyright("© 2018 VIEApps.net")]
 
 [assembly: AssemblyVersion("10.1.5.1801")]
 [assembly: AssemblyFileVersion("10.1.5.1801")]
