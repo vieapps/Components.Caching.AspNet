@@ -21,8 +21,7 @@ namespace net.vieapps.Components.Caching.AspNet
 				throw new ArgumentNullException(nameof(config), "No configuration is found");
 
 			base.Initialize(name, config);
-			if (MemcachedSessionStateProvider.Prefixs.Item1 == null || MemcachedSessionStateProvider.Prefixs.Item2 == null)
-				MemcachedSessionStateProvider.Prefixs = new Tuple<string, string>("Header@" + name + "#", "Data@" + name + "#");
+			MemcachedSessionStateProvider.Prefixs = new Tuple<string, string>("Header@" + name + "#", "Data@" + name + "#");
 		}
 
 		public override void InitializeRequest(HttpContext context) { }
@@ -43,13 +42,13 @@ namespace net.vieapps.Components.Caching.AspNet
 
 		public override void CreateUninitializedItem(HttpContext context, string id, int timeout)
 		{
-			(new MemcachedSessionStateItem()
+			new MemcachedSessionStateItem()
 			{
 				Data = new SessionStateItemCollection(),
 				Flag = SessionStateActions.InitializeItem,
 				LockId = 0,
 				Timeout = timeout
-			}).Save(id, false, false);
+			}.Save(id, false, false);
 		}
 
 		public override SessionStateStoreData GetItem(HttpContext context, string id, out bool locked, out TimeSpan lockAge, out object lockId, out SessionStateActions actions)
@@ -63,7 +62,7 @@ namespace net.vieapps.Components.Caching.AspNet
 		public override SessionStateStoreData GetItemExclusive(HttpContext context, string id, out bool locked, out TimeSpan lockAge, out object lockId, out SessionStateActions actions)
 		{
 			var data = this.Get(context, true, id, out locked, out lockAge, out lockId, out actions);
-			return (data == null)
+			return data == null
 				? null
 				: data.ToStoreData(context);
 		}
@@ -203,7 +202,7 @@ namespace net.vieapps.Components.Caching.AspNet
 		void SaveHeader(MemoryStream stream)
 		{
 			var pair = new Pair((byte)1, new Triplet((byte)this.Flag, this.Timeout, new Pair(this.LockId, this.LockTime.ToBinary())));
-			(new ObjectStateFormatter()).Serialize(stream, pair);
+			new ObjectStateFormatter().Serialize(stream, pair);
 		}
 
 		public bool Save(string id, bool metaOnly, bool useCas)
@@ -239,7 +238,7 @@ namespace net.vieapps.Components.Caching.AspNet
 
 		static MemcachedSessionStateItem LoadItem(MemoryStream stream)
 		{
-			var graph = (new ObjectStateFormatter()).Deserialize(stream) as Pair;
+			var graph = new ObjectStateFormatter().Deserialize(stream) as Pair;
 			if (graph == null)
 				return null;
 
@@ -248,7 +247,7 @@ namespace net.vieapps.Components.Caching.AspNet
 
 			var trip = (Triplet)graph.Second;
 			var result = new MemcachedSessionStateItem();
-			result.Flag = (SessionStateActions)((byte)trip.First);
+			result.Flag = (SessionStateActions)(byte)trip.First;
 			result.Timeout = (int)trip.Second;
 			var lockInfo = (Pair)trip.Third;
 			result.LockId = (ulong)lockInfo.First;

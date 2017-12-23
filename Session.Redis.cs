@@ -20,8 +20,7 @@ namespace net.vieapps.Components.Caching.AspNet
 				throw new ArgumentNullException(nameof(config), "No configuration is found");
 
 			base.Initialize(name, config);
-			if (RedisSessionStateProvider.Prefix == null)
-				RedisSessionStateProvider.Prefix = name + "@";
+			RedisSessionStateProvider.Prefix = name + "@";
 		}
 
 		public override void InitializeRequest(HttpContext context) { }
@@ -71,7 +70,6 @@ namespace net.vieapps.Components.Caching.AspNet
 
 		public override void ReleaseItemExclusive(HttpContext context, string id, object lockId)
 		{
-			//no lock to release
 		}
 
 		public override void RemoveItem(HttpContext context, string id, object lockId, SessionStateStoreData item)
@@ -152,5 +150,4 @@ namespace net.vieapps.Components.Caching.AspNet
 			return (SessionStateActions)this._actionFlag;
 		}
 	}
-
 }

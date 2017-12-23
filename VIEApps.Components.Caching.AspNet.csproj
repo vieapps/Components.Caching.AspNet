@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="VIEApps.Components.Caching">
-      <Version>10.1.5.1801-rc8</Version>
+      <Version>10.1.5.1801-rc9</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
