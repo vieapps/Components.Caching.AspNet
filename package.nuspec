@@ -14,7 +14,7 @@
 		<repository type="git" url="https://github.com/vieapps/Components.Caching.AspNet" />
 		<dependencies>
 			<group targetFramework=".NETStandard2.0">
-				<dependency id="VIEApps.Components.Caching" version="10.1.5.1801-rc8" exclude="Build,Analyzers" />
+				<dependency id="VIEApps.Components.Caching" version="10.1.5.1801" exclude="Build,Analyzers" />
 			</group>
 		</dependencies>
 	</metadata>
