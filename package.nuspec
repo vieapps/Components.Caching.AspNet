@@ -2,10 +2,10 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
 	<metadata>
 		<id>VIEApps.Components.Caching.AspNet</id>
-		<version>10.1.7.1802</version>
+		<version>10.1.8.1802</version>
 		<authors>VIEApps.net</authors>
 		<copyright>© 2018 VIEApps.net</copyright>
-		<title>VIEApps NGX Caching for ASP.NET Session</title>
+		<title>VIEApps NGX Caching for ASP.NET</title>
 		<description>The library to help ASP.NET Session State works with distributed cache (Memcached &amp; Redis)</description>
 		<summary>The library to help ASP.NET Session State works with distributed cache (Memcached &amp; Redis)</summary>
 		<tags>sessionstate memcached redis vieapps vieapps.components</tags>
@@ -14,7 +14,7 @@
 		<repository type="git" url="https://github.com/vieapps/Components.Caching.AspNet" />
 		<dependencies>
 			<group targetFramework=".NETStandard2.0">
-				<dependency id="VIEApps.Components.Caching" version="10.1.7.1802" exclude="Build,Analyzers" />
+				<dependency id="VIEApps.Components.Caching" version="10.1.8.1802" exclude="Build,Analyzers" />
 			</group>
 		</dependencies>
 	</metadata>
