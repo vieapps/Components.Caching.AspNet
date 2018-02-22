@@ -30,10 +30,7 @@ namespace net.vieapps.Components.Caching.AspNet
 
 		public override void Dispose() { }
 
-		public override bool SetItemExpireCallback(SessionStateItemExpireCallback expireCallback)
-		{
-			return false;
-		}
+		public override bool SetItemExpireCallback(SessionStateItemExpireCallback expireCallback) { return false; }
 
 		public override SessionStateStoreData CreateNewStoreData(HttpContext context, int timeout)
 		{

@@ -29,10 +29,7 @@ namespace net.vieapps.Components.Caching.AspNet
 
 		public override void Dispose() { }
 
-		public override bool SetItemExpireCallback(SessionStateItemExpireCallback expireCallback)
-		{
-			return false;
-		}
+		public override bool SetItemExpireCallback(SessionStateItemExpireCallback expireCallback) { return false; }
 
 		public override SessionStateStoreData GetItemExclusive(HttpContext context, string id, out bool locked, out TimeSpan lockAge, out object lockId, out SessionStateActions actions)
 		{
@@ -68,9 +65,7 @@ namespace net.vieapps.Components.Caching.AspNet
 			Redis.Client.Set(RedisSessionStateProvider.Prefix + id, data, item.Timeout);
 		}
 
-		public override void ReleaseItemExclusive(HttpContext context, string id, object lockId)
-		{
-		}
+		public override void ReleaseItemExclusive(HttpContext context, string id, object lockId) { }
 
 		public override void RemoveItem(HttpContext context, string id, object lockId, SessionStateStoreData item)
 		{
